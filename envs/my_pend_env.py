@@ -47,12 +47,12 @@ class MyPendEnv(gym.Env):
         self.observation_space = spaces.Box(
             low=low, high=high, dtype=np.float32)
 
-    def step(self, u):
+    def step(self, action):
         th, thdot = self.state  # th := theta, 角度；thdot：角速度
-        # u = np.clip(u, self.umin, self.umax)[0]
+        u = action * 3 - 3
         self.last_u = u  # for rendering
         reward = self.reward(th, thdot, u)
-        newth, newthdot = self.new_state(th, thdot, u=u)
+        newth, newthdot = self.new_state(th, thdot, u)
         self.state = np.array([newth, newthdot])  # 状态更新
         if self.render_mode == "human":
             self.render()
@@ -181,9 +181,10 @@ class MyPendEnv(gym.Env):
             pygame.quit()
             self.isopen = False
 
-    def reward(self, theta, d_theta, u):
+    def reward(self, theta, thdot, u):
         # cost是reward的相反数，是正的。reward是负的
-        costs = 5 * theta ** 2 + 0.1 * d_theta ** 2 + u ** 2
+        theta = np.mod(theta + np.pi, 2 * np.pi) - np.pi
+        costs = 5 * theta ** 2 + 0.1 * thdot ** 2 + u ** 2
         return -costs
 
 

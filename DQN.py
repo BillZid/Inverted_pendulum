@@ -35,7 +35,7 @@ class Qnet(torch.nn.Module):
     def forward(self, x):
         x = F.relu(self.fc1(x))  # 隐藏层使用ReLU激活函数
         return self.fc2(x)
-    
+
 
 class DQN:
     ''' DQN算法 '''
@@ -126,7 +126,7 @@ def train():
                 state, _ = env.reset(fix=True)
                 done = False
                 j = 0
-                while done:
+                while j < 10000:
                     j = j + 1
                     action = agent.take_action(state)
                     next_state, reward, done, _, _ = env.step(action)
@@ -145,9 +145,11 @@ def train():
                         }
                         agent.update(transition_dict)
                 if (i_episode + 1) % 5 == 0:
-                    np.save("./results/DQN/q_net_weight.npy", agent.q_net.fc2.weight.data.cpu().numpy())
+                    torch.save(agent.q_net.state_dict(),
+                               "./results/DQN/agent_%d_%d.pth" %
+                               (i, i_episode + 1))
                     with open("./results/DQN/episode_return.txt", "a+") as f:
-                        f.write('episode: ' + str(i_episode + 1) + ' ')
+                        f.write('episode:%i_%i' % (i, i_episode + 1) + '\n')
                         f.write(str(episode_return) + '\n')
                 return_list.append(episode_return)
                 if (i_episode + 1) % 10 == 0:
@@ -175,11 +177,11 @@ def load():
     action_dim = env.action_space.n
     agent = DQN(state_dim, hidden_dim, action_dim, lr, gamma, epsilon,
                 target_update, device)
-    agent.q_net.fc2.weight.data = torch.from_numpy(np.load("./results/DQN/q_net_weight.npy")).to(device)
+    agent.q_net.load_state_dict(torch.load("./results/DQN/agent_9_15.pth"))
     # 动画
     state, _ = env.reset(fix=True)
     j = 0
-    while j < 1000:
+    while j < 500:
         j = j + 1
         action = agent.take_action(state)
         next_state, _, _, _, _ = env.step(action)
@@ -188,5 +190,5 @@ def load():
 
 
 if __name__ == '__main__':
-    train()
+    # train()
     load()
