@@ -4,13 +4,11 @@ QLearning算法
 import numpy as np
 from utils import DiscreteUtils
 
-np.random.seed(0)
-
 
 class QLearning(DiscreteUtils):
 
     # episode_num: episode数目，episode_length: 一个episode的长度
-    def train(self, episode_num=500, episode_length=10000):
+    def train(self, episode_num=1000, episode_length=10000):
 
         lr = 0.8
         epsilon = 0.1  # 初始的epsilon贪心的探索率
@@ -31,9 +29,9 @@ class QLearning(DiscreteUtils):
             i_thdot = self.v2i(
                     thdot, -thdot_max, thdot_max, self.n_thdot)
             episode_step = 0  # 当前episode采样了多少个点
-            delta = 0
+            # delta = 0
             while episode_step < episode_length:
-                old_q_table = self.q_table.copy()
+                # old_q_table = self.q_table.copy()
                 episode_step += 1
                 action = self.epsilon_greedy_action(i_th, i_thdot, epsilon)
                 (new_th, new_thdot), reward, ter, _, _ = self.env.step(action)
@@ -48,25 +46,25 @@ class QLearning(DiscreteUtils):
                 i_th, i_thdot = i_new_th, i_new_thdot
                 if ter:
                     break
-                delta = max(delta, np.abs(np.amax(self.q_table - old_q_table)))
-            with open(self.data_dir + 'log.txt', 'a+') as f:
-                f.write('episode %i: delta= %s return= %s \n' % (episode_count, delta, episode_return))
-                episode_return = 0
-            if episode_count % 100 == 0:
-                np.save(self.data_dir + 'q_table_%i.npy' % (episode_count), self.q_table)
+                # delta = max(delta, np.abs(np.amax(self.q_table - old_q_table)))
+            # with open(self.data_dir + 'log.txt', 'a+') as f:
+            #     f.write('episode %i: delta= %s return= %s \n' % (episode_count, delta, episode_return))
+            #     episode_return = 0
+            # if episode_count % 100 == 0:
+            #     np.save(self.data_dir + 'q_table_%i.npy' % (episode_count), self.q_table)
                 # lr = lr * decay
                 # epsilon = max(epsilon * decay, epsilon_low)
 
-            # if episode_count % 100 == 0:
-            #     print("episode %s:  delta= %s" % (episode_count, delta))
-            #     print("episode %s:  return= %s" % (episode_count, episode_return))
-            #     episode_return = 0
+            if episode_count % 10 == 0:
+                # print("episode %s:  delta= %s" % (episode_count, delta))
+                print("episode %s:  return= %s" % (episode_count, episode_return))
+                episode_return = 0
 
     # 通过epsilon贪心策略返回一个action
     def epsilon_greedy_action(self, index_th, index_thdot, epsilon):
-        if np.random.rand() > 1-epsilon:  # 以1-epsilon的概率返回q最大的action
+        if np.random.rand() < 1-epsilon:  # 以1-epsilon的概率返回q最大的action
             action = np.argmax(self.q_table[index_th, index_thdot])
-        else:  # 以1-epsilon的概率随机返回一个action
+        else:  # 以epsilon的概率随机返回一个action
             action = np.random.randint(2)
         return action
 
@@ -81,10 +79,10 @@ class QLearning(DiscreteUtils):
 
 
 if __name__ == "__main__":
-    agent = QLearning(n_th=300, n_thdot=300, n_actions=3, gamma=1)
+    agent = QLearning(n_th=300, n_thdot=300, n_actions=3, gamma=0.98)
     agent.load()  # load参数
-    # agent.train()  # 训练模型
-    # agent.save()
+    agent.train()  # 训练模型
+    agent.save()
     # agent.demo(max_step=1000)  # 演示
     agent.demo(save_video=True)  # 保存视频
     agent.env.close()

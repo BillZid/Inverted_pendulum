@@ -1,0 +1,107 @@
+Sender: LSF System <lsfadmin@a3u01n04>
+Subject: Job 427740: <#BSUB -n 36;#BSUB -o %J.lsf.out;#BSUB -e %J.lsf.err;#BSUB -q batch;#BSUB -R "span[ptile=36]"; module purge;module load compilers/oneapi-2021.1.1; cd /share/home/zhengwenzhen/RL/Inverted-pendulum;python ./sarsa.py> in cluster <cluster1> Done
+
+Job <#BSUB -n 36;#BSUB -o %J.lsf.out;#BSUB -e %J.lsf.err;#BSUB -q batch;#BSUB -R "span[ptile=36]"; module purge;module load compilers/oneapi-2021.1.1; cd /share/home/zhengwenzhen/RL/Inverted-pendulum;python ./sarsa.py> was submitted from host <ln02> by user <zhengwenzhen> in cluster <cluster1> at Fri Apr 14 10:33:54 2023
+Job was executed on host(s) <36*a3u01n04>, in queue <batch>, as user <zhengwenzhen> in cluster <cluster1> at Fri Apr 14 10:32:02 2023
+</share/home/zhengwenzhen> was used as the home directory.
+</share/home/zhengwenzhen/lsf> was used as the working directory.
+Started at Fri Apr 14 10:32:02 2023
+Terminated at Fri Apr 14 10:39:53 2023
+Results reported at Fri Apr 14 10:39:53 2023
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#BSUB -n 36
+#BSUB -o %J.lsf.out
+#BSUB -e %J.lsf.err
+#BSUB -q batch
+#BSUB -R "span[ptile=36]"
+
+module purge
+module load compilers/oneapi-2021.1.1
+
+cd /share/home/zhengwenzhen/RL/Inverted-pendulum
+python ./sarsa.py
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   476.32 sec.
+    Max Memory :                                 46 MB
+    Average Memory :                             42.20 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                40
+    Run time :                                   471 sec.
+    Turnaround time :                            359 sec.
+
+The output (if any) follows:
+
+episode 10:  return= -674122.1245455021
+episode 20:  return= -490404.12384163553
+episode 30:  return= -548299.9540179728
+episode 40:  return= -436711.9467905383
+episode 50:  return= -589614.3259515264
+episode 60:  return= -567801.212964308
+episode 70:  return= -494387.4893116917
+episode 80:  return= -480695.91538296535
+episode 90:  return= -521965.15971036477
+episode 100:  return= -733425.7119384479
+episode 110:  return= -539551.3030982186
+episode 120:  return= -563723.577348303
+episode 130:  return= -501485.8173696906
+episode 140:  return= -490530.67045299936
+episode 150:  return= -431880.39899827086
+episode 160:  return= -589212.1936668127
+episode 170:  return= -405690.6480431179
+episode 180:  return= -568974.8370969252
+episode 190:  return= -594212.987195898
+episode 200:  return= -481646.07808346994
+episode 210:  return= -436058.20684164437
+episode 220:  return= -565950.0167100691
+episode 230:  return= -486367.045317932
+episode 240:  return= -425396.8794573576
+episode 250:  return= -504718.8428889186
+episode 260:  return= -589497.99677828
+episode 270:  return= -521256.74278107734
+episode 280:  return= -518892.59859952965
+episode 290:  return= -435706.110814779
+episode 300:  return= -433033.51873228303
+episode 310:  return= -469425.3707876408
+episode 320:  return= -494100.0850275112
+episode 330:  return= -468688.10089029593
+episode 340:  return= -424258.40328924515
+episode 350:  return= -468706.79967087955
+episode 360:  return= -570500.9572655914
+episode 370:  return= -512395.43542085454
+episode 380:  return= -494070.0132405408
+episode 390:  return= -492305.71534382226
+episode 400:  return= -418216.7566322527
+episode 410:  return= -423345.56803342997
+episode 420:  return= -542170.4412548955
+episode 430:  return= -461871.98016874056
+episode 440:  return= -590919.348799137
+episode 450:  return= -449462.3113045679
+episode 460:  return= -434981.12797367736
+episode 470:  return= -536966.2412330088
+episode 480:  return= -551499.9158837027
+episode 490:  return= -409975.02484409243
+episode 500:  return= -531724.5716862802
+Moviepy - Building video /share/home/zhengwenzhen/RL/Inverted-pendulum/results/SARSA_th-300_dth-300_a-3/demo_video/rl-video-episode-0.mp4.
+Moviepy - Writing video /share/home/zhengwenzhen/RL/Inverted-pendulum/results/SARSA_th-300_dth-300_a-3/demo_video/rl-video-episode-0.mp4
+
+Moviepy - Done !
+Moviepy - video ready /share/home/zhengwenzhen/RL/Inverted-pendulum/results/SARSA_th-300_dth-300_a-3/demo_video/rl-video-episode-0.mp4
+
+
+PS:
+
+Read file <427740.lsf.err> for stderr output of this job.
+

@@ -57,5 +57,5 @@ if __name__ == "__main__":
     agent.load()  # load参数
     # agent.train(epsilon=0.01)
     # agent.save()
-    agent.demo(max_step=500,save_video=True)  # 保存视频
+    # agent.demo(max_step=500,save_video=True)  # 保存视频
     agent.env.close()
